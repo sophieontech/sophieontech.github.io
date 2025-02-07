@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome | Sophie On Tech</title>
+  <title>Sophie On Tech</title>
 
   <style>
     * {
@@ -17,12 +17,6 @@
       color: #333;
       text-align: center;
       padding: 20px;
-    }
-    header {
-      background: #007bff;
-      color: white;
-      padding: 15px;
-      font-size: 1.5rem;
     }
     .container {
       max-width: 800px;
@@ -64,7 +58,7 @@
     }
   </style>
 
-  <!-- Datadog RUM (Hidden but Active) -->
+  <!-- Datadog RUM SDK -->
   <script 
     src="https://www.datadoghq-browser-agent.com/us1/v5/datadog-rum.js"
     type="text/javascript"
@@ -99,19 +93,27 @@
 
   <div class="container">
     <h1>Hello, I'm Sophie! 👋</h1>
-    <p>I'm a soluions architect passionate about security, cloud technologies, observability, and community.</p>
+    <p>I'm a solutions architect passionate about security, cloud technologies, observability, and building communities.</p>
+
 
     <h2>Contact Me</h2>
     <p>Let's connect! Reach out via email or social media.</p>
     <div class="social-icons">
       <a href="https://twitter.com/_thesophina" target="_blank">🐦 Twitter</a>
       <a href="https://github.com/sophieontech" target="_blank">💻 GitHub</a>
-      <a href="mailto:sophina@mycybersavvy.com">📧 Email</a>
+      <a href="mailto:sophie@example.com">📧 Email</a>
     </div>
 
-    <h2>🔹 Random Tech Fact 🔹</h2>
-    <p id="tech-fact">Loading...</p>
-    <button class="button" onclick="fetchTechFact()">Get a New Fact</button>
+    <h2>🔹 Cybersecurity Fact 🔹</h2>
+    <p id="cyber-fact">Loading...</p>
+    <button class="button" onclick="fetchCyberFact()">Get a New Cybersecurity Tip</button>
+
+    <h2>⚠️ Intentional JavaScript Error</h2>
+    <button class="button" onclick="triggerError()">Trigger JS Error</button>
+
+    <h2>❌ Broken Button</h2>
+    <button id="broken-button" class="button">Click Me (Won't Work)</button>
+
   </div>
 
   <footer>
@@ -119,15 +121,58 @@
   </footer>
 
   <script>
-    function fetchTechFact() {
-      const facts = [
-        "The first computer virus, \"Creeper,\" was created in 1971 and simply displayed the message: \"I'M THE CREEPER, CATCH ME IF YOU CAN!\"",
-        "The most expensive cyber attack in history was NotPetya (2017), costing over $10 billion in damages.",
-        "The first 1GB hard drive was announced in 1980 and cost $40,000.",
+    // 1️⃣ Intentional JavaScript Error for RUM Debugging
+    function triggerError() {
+      console.log("Triggering an intentional error...");
+
+      // This function does not exist, causing a ReferenceError
+      nonexistentFunction();
+    }
+
+    // Auto-trigger error after page loads
+    document.addEventListener("DOMContentLoaded", function () {
+      setTimeout(triggerError, 3000); // Delay to ensure RUM loads
+    });
+
+    // 2️⃣ Broken Button Simulation (Doesn't Work on Purpose)
+    document.addEventListener("DOMContentLoaded", function () {
+      const brokenButton = document.getElementById("broken-button");
+
+      if (brokenButton) {
+        brokenButton.addEventListener("click", function (event) {
+          console.warn("User clicked a broken button! But nothing happens.");
+          
+          // Simulating a frontend issue by blocking the action
+          event.preventDefault();
+
+          // Manually logging this issue in Datadog RUM
+          if (window.DD_RUM) {
+            window.DD_RUM.addError("Broken button clicked - No response!", {
+              customMessage: "User clicked a button that should work, but it's broken.",
+              element: "broken-button",
+              severity: "warning"
+            });
+          }
+        });
+      }
+    });
+
+    // 3️⃣ Fetch Random Cybersecurity Fact
+    function fetchCyberFact() {
+      const cyberFacts = [
+        "The first computer virus, 'Creeper', was created in 1971.",
         "Weak passwords cause 81% of hacking-related breaches.",
-        "The first website ever was info.cern.ch, created by Tim Berners-Lee."
-    ];
-      document.getElementById("tech-fact").innerText = facts[Math.floor(Math.random() * facts.length)];
+        "Hackers attack a computer every 39 seconds on average.",
+        "The dark web makes up over 90% of the internet.",
+        "The largest DDoS attack exceeded 3.47 terabits per second.",
+        "Use a password manager to store unique passwords for every website.",
+        "Enable Two-Factor Authentication (2FA) for extra security.",
+        "Be careful with phishing emails – never click suspicious links.",
+        "Avoid using public Wi-Fi for banking or sensitive transactions.",
+        "Always update your software & OS to patch security vulnerabilities."
+      ];
+      
+      document.getElementById("cyber-fact").innerText = cyberFacts[Math.floor(Math.random() * cyberFacts.length)];
     }
   </script>
 
