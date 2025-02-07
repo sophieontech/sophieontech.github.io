@@ -1,18 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- RUM SDK (CDN Sync or Async) -->
-  <script
+  <!-- Load Datadog RUM SDK -->
+  <script 
     src="https://www.datadoghq-browser-agent.com/us1/v5/datadog-rum.js"
-    type="text/javascript">
+    type="text/javascript" 
+    defer>
   </script>
   <script>
-    window.DD_RUM && window.DD_RUM.init({
-      clientToken: 'pubed63f8eb7fd693be897e4a61839f3c7e',
-      applicationId: '5ff98614-625c-4ba8-9e9b-902c2a581991',
-      // Additional config options...
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.DD_RUM) {
+        window.DD_RUM.init({
+          clientToken: 'pubed63f8eb7fd693be897e4a61839f3c7e',
+          applicationId: '5ff98614-625c-4ba8-9e9b-902c2a581991',
+          site: 'datadoghq.com',
+          service: 'my-test-app',
+          env: 'sandbox',
+          sessionSampleRate: 100,
+          sessionReplaySampleRate: 20,
+          trackUserInteractions: true,
+          trackResources: true,
+          trackLongTasks: true,
+          defaultPrivacyLevel: 'mask-user-input',
+        });
+      } else {
+        console.error("Datadog RUM SDK not loaded!");
+      }
     });
-    // Optional: startSessionReplayRecording() to enable Session Replay
   </script>
 </head>
 <body>
