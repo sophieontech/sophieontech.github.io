@@ -1,20 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <!-- Load Datadog RUM SDK -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome | Sophie On Tech</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background: #f4f4f4;
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    header {
+      background: #007bff;
+      color: white;
+      padding: 15px;
+      font-size: 1.5rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      color: #007bff;
+    }
+    .button {
+      background: #007bff;
+      color: white;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .button:hover {
+      background: #0056b3;
+    }
+    footer {
+      margin-top: 20px;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      font-size: 0.9rem;
+    }
+    .social-icons a {
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 20px;
+      color: #007bff;
+    }
+  </style>
+
+  <!-- Datadog RUM (Hidden but Active) -->
   <script 
     src="https://www.datadoghq-browser-agent.com/us1/v5/datadog-rum.js"
-    type="text/javascript" 
+    type="text/javascript"
     defer>
   </script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       if (window.DD_RUM) {
         window.DD_RUM.init({
-          clientToken: 'pubed63f8eb7fd693be897e4a61839f3c7e',
-          applicationId: '5ff98614-625c-4ba8-9e9b-902c2a581991',
+          clientToken: '<redacted client token>',
+          applicationId: '<redacted app ID>',
           site: 'datadoghq.com',
-          service: 'my-test-app',
+          service: 'sophieontech',
           env: 'sandbox',
           sessionSampleRate: 100,
           sessionReplaySampleRate: 20,
@@ -28,9 +91,45 @@
       }
     });
   </script>
+
 </head>
 <body>
-  <h1>You did it!</h1>
-  <a href="https://app.datadoghq.com/rum/list">Go to the RUM Explorer</a>
+
+  <header>Welcome to Sophie On Tech</header>
+
+  <div class="container">
+    <h1>Hello, I'm Sophie! 👋</h1>
+    <p>I'm a soluions architect passionate about security, cloud technologies, observability, and community.</p>
+
+    <h2>Contact Me</h2>
+    <p>Let's connect! Reach out via email or social media.</p>
+    <div class="social-icons">
+      <a href="https://twitter.com/_thesophina" target="_blank">🐦 Twitter</a>
+      <a href="https://github.com/sophieontech" target="_blank">💻 GitHub</a>
+      <a href="mailto:sophina@mycybersavvy.com">📧 Email</a>
+    </div>
+
+    <h2>🔹 Random Tech Fact 🔹</h2>
+    <p id="tech-fact">Loading...</p>
+    <button class="button" onclick="fetchTechFact()">Get a New Fact</button>
+  </div>
+
+  <footer>
+    &copy; 2024 Sophie On Tech | Built with ❤️
+  </footer>
+
+  <script>
+    function fetchTechFact() {
+      const facts = [
+        "The first computer virus, \"Creeper,\" was created in 1971 and simply displayed the message: \"I'M THE CREEPER, CATCH ME IF YOU CAN!\"",
+        "The most expensive cyber attack in history was NotPetya (2017), costing over $10 billion in damages.",
+        "The first 1GB hard drive was announced in 1980 and cost $40,000.",
+        "Weak passwords cause 81% of hacking-related breaches.",
+        "The first website ever was info.cern.ch, created by Tim Berners-Lee."
+    ];
+      document.getElementById("tech-fact").innerText = facts[Math.floor(Math.random() * facts.length)];
+    }
+  </script>
+
 </body>
 </html>
